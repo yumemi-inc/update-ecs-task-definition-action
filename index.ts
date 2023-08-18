@@ -34,6 +34,8 @@ const getInputRequired = (name: string) =>
         `Malformed images reference. Expected 'container_name=image_uri' format, got '${image}'`,
       );
     }
+
+    imageUpdates[parts[0]] = parts[1];
   }
 
   const client = new ECSClient();
