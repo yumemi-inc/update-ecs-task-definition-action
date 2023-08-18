@@ -87,27 +87,30 @@ const getInputRequired = (name: string) =>
 
   let newTaskDefinitionArn = '';
   await group('Updating the task definition', async () => {
-    const response = await client.send(
-      new RegisterTaskDefinitionCommand({
-        family: family,
-        containerDefinitions: taskDefinition.containerDefinitions,
-        cpu: taskDefinition.cpu,
-        ephemeralStorage: taskDefinition.ephemeralStorage,
-        executionRoleArn: taskDefinition.executionRoleArn,
-        inferenceAccelerators: taskDefinition.inferenceAccelerators,
-        ipcMode: taskDefinition.ipcMode,
-        memory: taskDefinition.memory,
-        networkMode: taskDefinition.networkMode,
-        pidMode: taskDefinition.pidMode,
-        placementConstraints: taskDefinition.placementConstraints,
-        proxyConfiguration: taskDefinition.proxyConfiguration,
-        requiresCompatibilities: taskDefinition.requiresCompatibilities,
-        runtimePlatform: taskDefinition.runtimePlatform,
-        tags: tags,
-        taskRoleArn: taskDefinition.taskRoleArn,
-        volumes: taskDefinition.volumes,
-      }),
-    );
+    const command = new RegisterTaskDefinitionCommand({
+      family: family,
+      containerDefinitions: taskDefinition.containerDefinitions,
+      cpu: taskDefinition.cpu,
+      ephemeralStorage: taskDefinition.ephemeralStorage,
+      executionRoleArn: taskDefinition.executionRoleArn,
+      inferenceAccelerators: taskDefinition.inferenceAccelerators,
+      ipcMode: taskDefinition.ipcMode,
+      memory: taskDefinition.memory,
+      networkMode: taskDefinition.networkMode,
+      pidMode: taskDefinition.pidMode,
+      placementConstraints: taskDefinition.placementConstraints,
+      proxyConfiguration: taskDefinition.proxyConfiguration,
+      requiresCompatibilities: taskDefinition.requiresCompatibilities,
+      runtimePlatform: taskDefinition.runtimePlatform,
+      taskRoleArn: taskDefinition.taskRoleArn,
+      volumes: taskDefinition.volumes,
+    });
+
+    if ((tags?.length ?? 0) > 0) {
+      command.input.tags = tags;
+    }
+
+    const response = await client.send(command);
 
     const arn = response.taskDefinition?.taskDefinitionArn;
     if (!arn) {
