@@ -31,15 +31,15 @@ steps:
 
 ## Inputs
 
-| Name   | Type         | Description                                                                                                              |
-|--------|--------------|--------------------------------------------------------------------------------------------------------------------------|
-| family | string       | Name of the task definition family to where fetch the latest revision and create a new revision.                         |
-| image  | List<string> | Map of the container name and the image URI to update in the task definition. Must be `container_name=image_uri` format. |                   |
+| Name   | Type           | Description                                                                                                              |
+|--------|----------------|--------------------------------------------------------------------------------------------------------------------------|
+| family | string         | Name of the task definition family to where fetch the latest revision and create a new revision.                         |
+| image  | List\<string\> | Map of the container name and the image URI to update in the task definition. Must be `container_name=image_uri` format. |                   |
 
 ## Outputs
 
-| Name                    | Type         | Description                                     |
-|-------------------------|--------------|-------------------------------------------------|
-| task-definition         | JSON<Object> | Updated task definition payload.                |
-| old-task-definition-arn | string       | ARN of the old revision of the task definition. |
-| new-task-definition-arn | string       | ARN of the new revision of the task definition. |
+| Name                    | Type           | Description                                     |
+|-------------------------|----------------|-------------------------------------------------|
+| task-definition         | JSON\<Object\> | Updated task definition payload.                |
+| old-task-definition-arn | string         | ARN of the old revision of the task definition. |
+| new-task-definition-arn | string         | ARN of the new revision of the task definition. |
