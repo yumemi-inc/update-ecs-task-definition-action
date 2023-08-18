@@ -44,6 +44,7 @@ const getInputRequired = (name: string) =>
   await group('Fetching latest revision of the task definition', async () => {
     const response = await client.send(
       new DescribeTaskDefinitionCommand({
+        include: ['TAGS'],
         taskDefinition: family,
       }),
     );
