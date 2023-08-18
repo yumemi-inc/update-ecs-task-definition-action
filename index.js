@@ -25778,7 +25778,7 @@ var require_ListTaskDefinitionsCommand = __commonJS({
       return smithy_client_1.Command;
     } });
     var Aws_json1_1_1 = require_Aws_json1_1();
-    var ListTaskDefinitionsCommand2 = class _ListTaskDefinitionsCommand extends smithy_client_1.Command {
+    var ListTaskDefinitionsCommand = class _ListTaskDefinitionsCommand extends smithy_client_1.Command {
       static getEndpointParameterInstructions() {
         return {
           UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
@@ -25815,7 +25815,7 @@ var require_ListTaskDefinitionsCommand = __commonJS({
         return (0, Aws_json1_1_1.de_ListTaskDefinitionsCommand)(output, context);
       }
     };
-    exports.ListTaskDefinitionsCommand = ListTaskDefinitionsCommand2;
+    exports.ListTaskDefinitionsCommand = ListTaskDefinitionsCommand;
   }
 });
 
@@ -28167,31 +28167,18 @@ var getInputRequired = (name) => (0, import_core.getInput)(name, {
   let taskDefinition = {};
   let tags;
   await (0, import_core.group)("Fetching latest revision of the task definition", async () => {
-    {
-      const response = await client.send(
-        new import_client_ecs.ListTaskDefinitionsCommand({
-          familyPrefix: family,
-          sort: "DESC"
-        })
-      );
-      const taskDefinitionArns = response.taskDefinitionArns ?? [];
-      if (taskDefinitionArns.length < 1) {
-        throw new Error("The family has no task definitions.");
-      }
-      oldTaskDefinitionArn = taskDefinitionArns[0];
+    const response = await client.send(
+      new import_client_ecs.DescribeTaskDefinitionCommand({
+        include: ["TAGS"],
+        taskDefinition: family
+      })
+    );
+    if (!response.taskDefinition || !response.taskDefinition.taskDefinitionArn) {
+      throw new Error("The task definition can not be retrieved.");
     }
-    {
-      const response = await client.send(
-        new import_client_ecs.DescribeTaskDefinitionCommand({
-          taskDefinition: oldTaskDefinitionArn
-        })
-      );
-      if (!response.taskDefinition) {
-        throw new Error("The task definition can not be retrieved.");
-      }
-      taskDefinition = response.taskDefinition;
-      tags = response.tags;
-    }
+    oldTaskDefinitionArn = response.taskDefinition.taskDefinitionArn;
+    taskDefinition = response.taskDefinition;
+    tags = response.tags;
     console.log(`\u2705 Fetched latest task definition: ${oldTaskDefinitionArn}`);
   });
   await (0, import_core.group)("Current task definition", async () => {
