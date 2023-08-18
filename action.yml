@@ -1,0 +1,14 @@
+name: Update ECS Task Definition Action
+description: Updates an ECS task definition with single or multiple containers, replacing their image references.
+author: YUMEMI Inc.
+branding:
+  icon: refresh-ccw
+  color: orange
+runs:
+  using: node16
+  main: 'index.js'
+inputs:
+  token:
+    required: true
+    description: Authenticated GitHub token.
+    default: '${{ github.token }}'
