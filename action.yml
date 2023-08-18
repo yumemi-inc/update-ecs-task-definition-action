@@ -8,7 +8,9 @@ runs:
   using: node16
   main: 'index.js'
 inputs:
-  token:
+  family:
     required: true
-    description: Authenticated GitHub token.
-    default: '${{ github.token }}'
+    description: Name of the task definition family to where fetch the latest revision and create a new revision.
+  images:
+    required: true
+    description: Map of the container name and the image URI to update in the task definition. Must be `container_name=image_uri` format.
