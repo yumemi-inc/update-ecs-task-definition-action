@@ -10,7 +10,6 @@ import {
 import {
   DescribeTaskDefinitionCommand,
   ECSClient,
-  ListTaskDefinitionsCommand,
   RegisterTaskDefinitionCommand,
   Tag,
   TaskDefinition,
@@ -43,36 +42,22 @@ const getInputRequired = (name: string) =>
   let taskDefinition: TaskDefinition = {};
   let tags: Tag[] | undefined;
   await group('Fetching latest revision of the task definition', async () => {
-    {
-      const response = await client.send(
-        new ListTaskDefinitionsCommand({
-          familyPrefix: family,
-          sort: 'DESC',
-        }),
-      );
+    const response = await client.send(
+      new DescribeTaskDefinitionCommand({
+        taskDefinition: family,
+      }),
+    );
 
-      const taskDefinitionArns = response.taskDefinitionArns ?? [];
-      if (taskDefinitionArns.length < 1) {
-        throw new Error('The family has no task definitions.');
-      }
-
-      oldTaskDefinitionArn = taskDefinitionArns[0];
+    if (
+      !response.taskDefinition ||
+      !response.taskDefinition.taskDefinitionArn
+    ) {
+      throw new Error('The task definition can not be retrieved.');
     }
 
-    {
-      const response = await client.send(
-        new DescribeTaskDefinitionCommand({
-          taskDefinition: oldTaskDefinitionArn,
-        }),
-      );
-
-      if (!response.taskDefinition) {
-        throw new Error('The task definition can not be retrieved.');
-      }
-
-      taskDefinition = response.taskDefinition;
-      tags = response.tags;
-    }
+    oldTaskDefinitionArn = response.taskDefinition.taskDefinitionArn;
+    taskDefinition = response.taskDefinition;
+    tags = response.tags;
 
     console.log(`✅ Fetched latest task definition: ${oldTaskDefinitionArn}`);
   });
