@@ -11,8 +11,8 @@ import {
   DescribeTaskDefinitionCommand,
   ECSClient,
   RegisterTaskDefinitionCommand,
-  Tag,
-  TaskDefinition,
+  type Tag,
+  type TaskDefinition,
 } from '@aws-sdk/client-ecs';
 
 const getInputRequired = (name: string) =>
