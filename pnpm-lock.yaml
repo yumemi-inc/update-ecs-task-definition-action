@@ -15,8 +15,8 @@ dependencies:
     specifier: ^6.0.0
     version: 6.0.0
   '@aws-sdk/client-ecs':
-    specifier: ^3.540.0
-    version: 3.540.0
+    specifier: ^3.542.0
+    version: 3.542.0
   '@octokit/rest':
     specifier: ^20.0.2
     version: 20.0.2
@@ -128,8 +128,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@aws-sdk/client-ecs@3.540.0:
-    resolution: {integrity: sha512-7DrQAo0UWP1Bw72YLHSvBH0gaDtA+eU2CrjnxqR5pDXRq6OFk4v36SlldE4jJ7d0ZPOr2MoRiHlCf4oP+2117A==}
+  /@aws-sdk/client-ecs@3.542.0:
+    resolution: {integrity: sha512-lNXoyZGYph3tK0kY6CmY7PpJxPlBIUnv8uE8bL+pUOyaXpBbT+Qnm4+9paUtPsPKSMCSfR1a5osFu122zLU1Xw==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
