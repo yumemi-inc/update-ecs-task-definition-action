@@ -1,6 +1,6 @@
 # Update ECS Task Definition Action
 
-> **Warning**  
+> [!WARNING]
 > This is not an official product of YUMEMI Inc.
 
 Updates an ECS task definition with single or multiple containers, replacing their image references.
