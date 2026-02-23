@@ -18,7 +18,7 @@
     "@actions/core": "^3.0.0",
     "@actions/exec": "^3.0.0",
     "@actions/github": "^9.0.0",
-    "@aws-sdk/client-ecs": "^3.990.0",
+    "@aws-sdk/client-ecs": "^3.995.0",
     "@octokit/rest": "^22.0.1",
     "node-fetch": "^3.3.2"
   },
